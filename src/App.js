@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Route, Routes, BrowserRouter, Navigate} from 'react-router-dom';
+import Cookies from "js-cookie";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -8,20 +9,22 @@ import './App.css';
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        if (storedUsername) {
+        const isAuthenticated = Cookies.get('isAuthenticated') === 'true';
+        if (isAuthenticated) {
             setLoggedIn(true);
-            setUsername(storedUsername);
         }
     }, []);
 
-    const handleLogin = async (user) => {
+    const handleLogin = async () => {
         setLoggedIn(true);
-        setUsername(user);
-        localStorage.setItem('username', user);
+        Cookies.set('isAuthenticated', true);
+    };
+
+    const exitFunction = async () => {
+        setLoggedIn(false);
+        Cookies.remove('isAuthenticated');
     };
 
     return (
@@ -37,7 +40,7 @@ const App = () => {
                 />
                 <Route
                     path="/dashboard"
-                    element={loggedIn ? <Dashboard username={username} /> : <Navigate to="/login" />}
+                    element={loggedIn ? <Dashboard onExit={exitFunction} /> : <Navigate to="/login" />}
                 />
             </Routes>
         </BrowserRouter>

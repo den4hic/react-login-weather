@@ -1,0 +1,17 @@
+.weather {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+}
+.weather p, .weather h2 {
+    margin-bottom: 10px;
+}
+
+.weather h2 {
+    color: #6d9ac4;
+    font-size: 30px;
+}
+
+.weather p {
+    font-size: 20px;
+}
