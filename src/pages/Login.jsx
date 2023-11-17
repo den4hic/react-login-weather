@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useCallback, useState} from 'react';
 
 import '../styles/Login.css'
 
@@ -7,14 +7,14 @@ const Login = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [isError, setIsError] = useState(false);
 
-    const handleLogin = (e) => {
+    const handleLogin = useCallback((e) => {
         e.preventDefault();
-        if(username === `denys${password}`) {
+        if (username === `denys${password}`) {
             onLogin();
         } else {
-            setIsError(true)
+            setIsError(true);
         }
-    };
+    }, [onLogin, username, password]);
 
     return (
         <div className="login" style={isError ? {height: '260px'} : {height: '230px'}}>

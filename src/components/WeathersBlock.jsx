@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import Weather from "./Weather";
 
 import '../styles/WeathersBlock.css'
 
 const WeathersBlock = (data) => {
-    const weatherList = data.data.data;
-    const everyEighthElement = [];
+    const everyEighthElement = useMemo(() => {
+        const weatherList = data.data.data;
+        const result = [];
 
-    for (let i = 0; i < weatherList.length; i += 8) {
-        everyEighthElement.push(weatherList[i]);
-    }
+        for (let i = 0; i < weatherList.length; i += 8) {
+            result.push(weatherList[i]);
+        }
+
+        return result;
+    }, [data]);
 
     return (
             <div>
